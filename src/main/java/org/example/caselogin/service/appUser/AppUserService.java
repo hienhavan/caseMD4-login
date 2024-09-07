@@ -3,6 +3,7 @@ package org.example.caselogin.service.appUser;
 import org.example.caselogin.model.User;
 import org.example.caselogin.model.UserPrinciple;
 import org.example.caselogin.repository.UserRepository;
+import org.example.caselogin.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class AppUserService implements IAppUserService {
     @Autowired
     private UserRepository appUserRepo;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public Iterable<User> findAll() {
@@ -29,7 +32,13 @@ public class AppUserService implements IAppUserService {
     @Override
     public void save(User appUser) {
         appUserRepo.save(appUser);
+        String email = appUser.getEmail();
+        String username = appUser.getFullName();
+        String password = appUser.getPassword();
+        String subject = "Your account has been created";
+        String text = String.format("Hello %s,\n\nYour account has been created successfully.\nAccount: %s\nPassword: %s\n\nBest regards", username, email, password);
 
+        emailService.sendEmail(email, subject, text);
     }
 
     @Override

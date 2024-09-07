@@ -10,11 +10,11 @@ public class StaffController {
 
     @GetMapping("")
     public String staffHome() {
-        return "staff/home"; // Trả về trang home cho staff
+        return "staff/home";
     }
 
     @GetMapping("/reports")
     public String staffReports() {
-        return "staff/reports"; // Trả về trang reports cho staff
+        return "staff/reports";
     }
 }

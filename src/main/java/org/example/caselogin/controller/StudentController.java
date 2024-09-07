@@ -10,11 +10,11 @@ public class StudentController {
 
     @GetMapping("")
     public String studentHome() {
-        return "student/home"; // Trả về trang home cho student
+        return "/index";
     }
 
     @GetMapping("/enrollments")
     public String studentEnrollments() {
-        return "student/enrollments"; // Trả về trang enrollments cho student
+        return "student/enrollments";
     }
 }

@@ -1,5 +1,8 @@
 package org.example.caselogin.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum ROLE {
     ROLE_ADMIN("admin"),
     ROLE_LECTURER("lecturer"),
@@ -15,4 +18,5 @@ public enum ROLE {
     public String getRoleName() {
         return roleName;
     }
+
 }
