@@ -3,7 +3,7 @@ package org.example.caselogin.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.caselogin.model.ROLE;
+import org.example.caselogin.model.ENUM.ROLE;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;

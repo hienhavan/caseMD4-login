@@ -1,7 +1,5 @@
-package org.example.caselogin.model;
+package org.example.caselogin.model.ENUM;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public enum ROLE {
     ROLE_ADMIN("admin"),

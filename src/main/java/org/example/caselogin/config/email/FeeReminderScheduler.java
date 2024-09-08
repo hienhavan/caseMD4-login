@@ -1,28 +1,19 @@
-package org.example.caselogin.controller;
+package org.example.caselogin.config.email;
 
-import org.example.caselogin.model.ENUM.ROLE;
 import org.example.caselogin.model.Fee;
-import org.example.caselogin.model.User;
 import org.example.caselogin.repository.FeeRepository;
-import org.example.caselogin.service.appUser.AppUserService;
 import org.example.caselogin.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@Controller
-@RequestMapping("/admin")
-public class AdminController {
-    @Autowired
-    AppUserService userService;
+@Component
+public class FeeReminderScheduler {
+
     @Autowired
     private FeeRepository feeRepository;
 
@@ -37,31 +28,7 @@ public class AdminController {
     java.sql.Date sqlDate1 = java.sql.Date.valueOf(formattedDate1);
     java.sql.Date sqlDate2 = java.sql.Date.valueOf(formattedDate2);
 
-    @GetMapping
-    public String homePage() {
-        return "adminPages/index";
-    }
-
-    @GetMapping("/dataClasses")
-    public String dataClasses() {
-        return "adminPages/charts/data";
-    }
-
-    @GetMapping("/moreInfo")
-    public String adminDashboard(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", Arrays.asList(ROLE.values()));
-        return "adminPages/forms/add";
-    }
-
-    @PostMapping("/add")
-    public String addUser(User user) {
-        userService.save(user);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/fees")
-
+    @Scheduled(cron = "50 23 * * * *")
     public void checkFeesAndSendReminders() {
         List<Fee> feesDueSoon = feeRepository.findFeesDueSoon(sqlDate1, sqlDate2);
         for (Fee fee : feesDueSoon) {

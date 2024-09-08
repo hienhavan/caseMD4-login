@@ -10,7 +10,7 @@ public class StudentController {
 
     @GetMapping("")
     public String studentHome() {
-        return "/index";
+        return "index2";
     }
 
     @GetMapping("/enrollments")

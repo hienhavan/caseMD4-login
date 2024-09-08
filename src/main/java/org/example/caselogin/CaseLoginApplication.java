@@ -2,12 +2,15 @@ package org.example.caselogin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 public class CaseLoginApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CaseLoginApplication.class, args);
-	}
+
+    public static void main(String[] args) {
+        SpringApplication.run(CaseLoginApplication.class, args);
+    }
 
 }
