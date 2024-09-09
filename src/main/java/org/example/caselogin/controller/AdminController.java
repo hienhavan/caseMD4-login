@@ -1,5 +1,6 @@
 package org.example.caselogin.controller;
 
+import org.example.caselogin.model.ENUM.FEE_STATUS;
 import org.example.caselogin.model.ENUM.ROLE;
 import org.example.caselogin.model.Fee;
 import org.example.caselogin.model.User;
@@ -31,7 +32,7 @@ public class AdminController {
     Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     String formattedDate1 = formatter.format(date);
-    Date dueSoonDate = new Date(date.getTime() + 3L * 24 * 60 * 60 * 1000);
+    Date dueSoonDate = new Date(date.getTime() - 3L * 24 * 60 * 60 * 1000);
     String formattedDate2 = formatter.format(dueSoonDate);
 
     java.sql.Date sqlDate1 = java.sql.Date.valueOf(formattedDate1);
@@ -63,13 +64,17 @@ public class AdminController {
     @GetMapping("/fees")
 
     public void checkFeesAndSendReminders() {
-        List<Fee> feesDueSoon = feeRepository.findFeesDueSoon(sqlDate1, sqlDate2);
+        List<Fee> feesDueSoon = feeRepository.findFeesDueSoon(sqlDate2, sqlDate1);
         for (Fee fee : feesDueSoon) {
-            String email = fee.getStudent().getUser().getEmail();
-            String subject = "Hạn nộp học phí sắp đến!";
-            String text = String.format("Chào %s, hạn nộp học phí của bạn là ngày %s. Vui lòng thanh toán trước ngày đó để tránh bị phạt.",
-                    fee.getStudent().getUser().getFullName(), fee.getDueDate().toString());
-            emailService.sendFeeReminderEmail(email, subject, text);
+            if (fee.getStatus().equals(FEE_STATUS.TUITION.getRoleName())){
+                String email = fee.getStudent().getUser().getEmail();
+                String subject = "Hạn nộp học phí sắp đến!";
+                String text = String.format("Chào %s, hạn nộp học phí của bạn là ngày %s. Vui lòng thanh toán trước ngày đó để tránh bị phạt.",
+                        fee.getStudent().getUser().getFullName(), fee.getDueDate().toString());
+                emailService.sendFeeReminderEmail(email, subject, text);
+                System.out.println(fee);
+            }
         }
+
     }
 }
