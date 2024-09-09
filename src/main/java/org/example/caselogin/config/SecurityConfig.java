@@ -157,9 +157,6 @@ public class SecurityConfig {
     @Autowired
     private AppUserService appUserService;
 
-//    @Autowired
-//    private CustomSuccessHandle customSuccessHandler;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

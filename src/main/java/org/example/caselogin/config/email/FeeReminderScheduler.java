@@ -28,7 +28,7 @@ public class FeeReminderScheduler {
     java.sql.Date sqlDate1 = java.sql.Date.valueOf(formattedDate1);
     java.sql.Date sqlDate2 = java.sql.Date.valueOf(formattedDate2);
 
-    @Scheduled(cron = "50 23 * * * *")
+//    @Scheduled(cron = "0 */2 * * * *")
     public void checkFeesAndSendReminders() {
         List<Fee> feesDueSoon = feeRepository.findFeesDueSoon(sqlDate1, sqlDate2);
         for (Fee fee : feesDueSoon) {
